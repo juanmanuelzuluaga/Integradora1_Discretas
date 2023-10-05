@@ -12,6 +12,7 @@ public class UserValidator {
     public static boolean isValidPriority(String input) {
         return PRIORITY_PATTERN.matcher(input).matches();
     }
+    
 
     public static boolean isValidDate(String input) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
