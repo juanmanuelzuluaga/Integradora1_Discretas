@@ -1,13 +1,12 @@
 import java.util.Date;
 
-public class taskReminders {
-
+public class Reminder {
     private String title;
     private String description;
     private Date deadline;
-    private boolean priority;
+    private String priority;
 
-    public taskReminders(String title, String description, Date deadline, boolean priority) {
+    public Reminder(String title, String description, Date deadline, String priority) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
@@ -38,11 +37,22 @@ public class taskReminders {
         this.deadline = deadline;
     }
 
-    public boolean isPriority() {
+    public String getPriority() {
         return priority;
     }
 
-    public void setPriority(boolean priority) {
+    public void setPriority(String priority) {
         this.priority = priority;
     }
+
+    @Override
+    public String toString() {
+        return "Reminder{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", deadline=" + deadline +
+                ", priority='" + priority + '\'' +
+                '}';
+    }
 }
+
