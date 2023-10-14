@@ -64,14 +64,48 @@ public class TaskReminderApp {
     }
 
     private void addTask() {
-        // lógica para agregar una tarea
-        // acción a la pila de deshacer
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Adding a new task:");
+        System.out.print("Enter title: ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine();
+
+        System.out.print("Enter deadline (dd/MM/yyyy): ");
+        String deadlineStr = scanner.nextLine();
+
+        System.out.print("Enter priority (Prioritaria/No prioritaria): ");
+        String priority = scanner.nextLine();
+
+        UserValidator UserInputValidator = null;
+        if (!UserValidator.isValidDate(deadlineStr) || !UserValidator.isValidPriority(priority)) {
+            System.out.println("Invalid input. Task not added.");
+            return;
+        }
+
+        Date deadline = DateUtil.parseDate(deadlineStr);
+
+        Task newTask = new Task(title, description, deadline, priority);
+
+        String taskId = generateUniqueId();
+        taskStorage.addTask(taskId, newTask);
+
+        undoStack.push(new UndoAction("Add Task", newTask));
+
+        System.out.println("Task added successfully.");
     }
 
-    private void addReminder() {
-        // lógica para agregar un recordatorio
-        // acción a la pila de deshacer
+    private String generateUniqueId() {
+        return null;
     }
+
+
+    private void addReminder() {
+
+    }
+
 
     private void modifyTaskOrReminder() {
         // lógica para modificar una tarea o recordatorio

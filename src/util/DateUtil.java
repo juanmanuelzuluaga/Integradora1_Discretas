@@ -13,5 +13,12 @@ public class DateUtil {
         return dateFormat.parse(dateString);
     }
 
+    public static Date parseDate(String deadlineStr) {
+        return null;
+    }
+
+    public static Date parseDateTime(String dateTimeStr) {
+        return null;
+    }
 }
 

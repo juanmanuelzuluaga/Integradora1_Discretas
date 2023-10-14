@@ -6,7 +6,7 @@ public class Reminder {
     private Date deadline;
     private String priority;
 
-    public Reminder(String title, String description, Date deadline, String priority) {
+    public Reminder(String title, String description, Date deadline) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;

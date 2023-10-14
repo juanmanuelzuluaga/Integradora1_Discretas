@@ -3,6 +3,9 @@ import java.util.Stack;
 public class UndoStack<T> {
     private Stack<T> stack;
 
+    private UndoStack<UndoAction> undoStack;
+
+
     public UndoStack() {
         stack = new Stack<>();
     }
@@ -21,5 +24,7 @@ public class UndoStack<T> {
     public boolean isEmpty() {
         return stack.isEmpty();
     }
+
+
 }
 

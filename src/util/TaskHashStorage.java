@@ -34,5 +34,8 @@ public class TaskHashStorage {
     public Map<String, Task> getAllTasks() {
         return taskMap;
     }
+
+    public void addReminder(String reminderId, Reminder newReminder) {
+    }
 }
 
