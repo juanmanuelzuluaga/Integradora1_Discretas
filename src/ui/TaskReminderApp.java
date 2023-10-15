@@ -5,12 +5,15 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class TaskReminderApp {
+
+    private UserValidator userValidator;
     private TaskHashStorage taskStorage;
     private TaskPriority priorityQueue;
     private TaskQueue taskQueue;
     private UndoStack<UndoAction> undoStack;
 
     public TaskReminderApp() {
+        userValidator = new UserValidator();
         taskStorage = new TaskHashStorage();
         priorityQueue = new TaskPriority();
         taskQueue = new TaskQueue();
@@ -33,7 +36,7 @@ public class TaskReminderApp {
             System.out.print("Enter your choice: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -103,8 +106,36 @@ public class TaskReminderApp {
 
 
     private void addReminder() {
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.println("Adding a new reminder:");
+        System.out.print("Enter title: ");
+        String title = scanner.nextLine();
+
+        System.out.print("Enter description: ");
+        String description = scanner.nextLine();
+
+        System.out.print("Enter date and time (dd/MM/yyyy HH:mm): ");
+        String dateTimeStr = scanner.nextLine();
+
+
+        if (!UserValidator.isValidDateTime(dateTimeStr)) {
+            System.out.println("Invalid input. Reminder not added.");
+            return;
+        }
+
+        Date dateTime = DateUtil.parseDateTime(dateTimeStr);
+
+        Reminder newReminder = new Reminder(title, description, dateTime);
+
+        String reminderId = generateUniqueId();
+        taskStorage.addReminder(reminderId, newReminder);
+
+        undoStack.push(new UndoAction(newReminder, "Add Reminder"));
+
+        System.out.println("Reminder added successfully.");
     }
+
 
 
 

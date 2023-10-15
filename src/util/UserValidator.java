@@ -12,7 +12,7 @@ public class UserValidator {
     public static boolean isValidPriority(String input) {
         return PRIORITY_PATTERN.matcher(input).matches();
     }
-    
+
 
     public static boolean isValidDate(String input) {
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
@@ -25,6 +25,19 @@ public class UserValidator {
         }
     }
 
+    public static boolean isValidDateTime(String dateTimeStr) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+        dateFormat.setLenient(false);
+
+        try {
+            Date parsedDate = dateFormat.parse(dateTimeStr);
+
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
+    }
 
     }
 
