@@ -107,15 +107,89 @@ public class TaskReminderApp {
     }
 
 
+
     private void modifyTaskOrReminder() {
-        // lógica para modificar una tarea o recordatorio
-        // acción a la pila de deshacer
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Modifying a task or reminder:");
+        System.out.print("Enter the unique ID of the task or reminder to modify: ");
+        String taskIdOrReminderId = scanner.nextLine();
+
+        if (!taskStorage.containsTask(taskIdOrReminderId) && !taskStorage.containsReminder(taskIdOrReminderId)) {
+            System.out.println("Task or reminder not found. Nothing to modify.");
+            return;
+        }
+
+        boolean isTask = taskStorage.containsTask(taskIdOrReminderId);
+
+        if (isTask) {
+            System.out.println("Modifying a task:");
+        } else {
+            System.out.println("Modifying a reminder:");
+        }
+
+        System.out.print("Enter new title: ");
+        String newTitle = scanner.nextLine();
+
+        System.out.print("Enter new description: ");
+        String newDescription = scanner.nextLine();
+
+        if (newTitle.isEmpty() || newDescription.isEmpty()) {
+            System.out.println("Invalid input. Title and description cannot be empty.");
+            return;
+        }
+
+        if (isTask) {
+            Task existingTask = taskStorage.getTask(taskIdOrReminderId);
+            existingTask.setTitle(newTitle);
+            existingTask.setDescription(newDescription);
+            taskStorage.modifyTask(taskIdOrReminderId, existingTask);
+            undoStack.push(new UndoAction("Modify Task", existingTask));
+        } else {
+            Reminder existingReminder = taskStorage.getReminder(taskIdOrReminderId);
+            existingReminder.setTitle(newTitle);
+            existingReminder.setDescription(newDescription);
+            taskStorage.modifyReminder(taskIdOrReminderId, existingReminder);
+            undoStack.push(new UndoAction(existingReminder, "Modify Reminder"));
+        }
+
+        System.out.println("Task or reminder modified successfully.");
     }
 
+
     private void deleteTaskOrReminder() {
-        // lógica para eliminar una tarea o recordatorio
-        // acción a la pila de deshacer
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Deleting a task or reminder:");
+        System.out.print("Enter the unique ID of the task or reminder to delete: ");
+        String taskIdOrReminderId = scanner.nextLine();
+
+        if (!taskStorage.containsTask(taskIdOrReminderId) && !taskStorage.containsReminder(taskIdOrReminderId)) {
+            System.out.println("Task or reminder not found. Nothing to delete.");
+            return;
+        }
+
+        boolean isTask = taskStorage.containsTask(taskIdOrReminderId);
+
+        if (isTask) {
+            System.out.println("Deleting a task:");
+        } else {
+            System.out.println("Deleting a reminder:");
+        }
+
+        if (isTask) {
+            Task deletedTask = taskStorage.getTask(taskIdOrReminderId);
+            taskStorage.deleteTask(taskIdOrReminderId);
+            undoStack.push(new UndoAction("Delete Task", deletedTask));
+        } else {
+            Reminder deletedReminder = taskStorage.getReminder(taskIdOrReminderId);
+            taskStorage.deleteReminder(taskIdOrReminderId);
+            undoStack.push(new UndoAction(deletedReminder, "Delete Reminder"));
+        }
+
+        System.out.println("Task or reminder deleted successfully.");
     }
+
 
     private void viewTasksAndReminders() {
         // lógica para mostrar una lista de tareas y recordatorios
