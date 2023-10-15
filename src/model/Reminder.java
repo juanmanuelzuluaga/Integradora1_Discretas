@@ -54,5 +54,9 @@ public class Reminder {
                 ", priority='" + priority + '\'' +
                 '}';
     }
+
+    public String getDateTime() {
+        return null;
+    }
 }
 

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TaskHashStorage {
@@ -49,6 +50,22 @@ public class TaskHashStorage {
     }
 
     public void deleteReminder(String taskIdOrReminderId) {
+    }
+
+    public List<Task> getTasksSortedByDeadline() {
+        return null;
+    }
+
+    public List<Reminder> getRemindersSortedByDeadline() {
+        return null;
+    }
+
+    public List<Task> getTasksSortedByPriority() {
+        return null;
+    }
+
+    public List<Reminder> getRemindersSortedByPriority() {
+        return null;
     }
 }
 

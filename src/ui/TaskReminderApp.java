@@ -1,8 +1,4 @@
-import java.util.Scanner;
-import java.util.Date;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class TaskReminderApp {
 
@@ -223,8 +219,49 @@ public class TaskReminderApp {
 
 
     private void viewTasksAndReminders() {
-        // lógica para mostrar una lista de tareas y recordatorios
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Viewing tasks and reminders:");
+        System.out.println("Choose how to sort the list:");
+        System.out.println("1. Sort by deadline");
+        System.out.println("2. Sort by priority");
+        System.out.print("Enter your choice (1 or 2): ");
+        int choice = scanner.nextInt();
+
+        if (choice == 1) {
+            System.out.println("Tasks and reminders sorted by deadline:");
+            List<Task> sortedTasks = taskStorage.getTasksSortedByDeadline();
+            List<Reminder> sortedReminders = taskStorage.getRemindersSortedByDeadline();
+            displayTasksAndReminders(sortedTasks, sortedReminders);
+        } else if (choice == 2) {
+            System.out.println("Tasks and reminders sorted by priority:");
+            List<Task> sortedTasks = taskStorage.getTasksSortedByPriority();
+            List<Reminder> sortedReminders = taskStorage.getRemindersSortedByPriority();
+            displayTasksAndReminders(sortedTasks, sortedReminders);
+        } else {
+            System.out.println("Invalid choice. Please enter 1 or 2.");
+        }
     }
+
+    private void displayTasksAndReminders(List<Task> tasks, List<Reminder> reminders) {
+        System.out.println("Tasks:");
+        for (Task task : tasks) {
+            System.out.println("Title: " + task.getTitle());
+            System.out.println("Description: " + task.getDescription());
+            System.out.println("Deadline: " + task.getDeadline());
+            System.out.println("Priority: " + task.getPriority());
+            System.out.println();
+        }
+
+        System.out.println("Reminders:");
+        for (Reminder reminder : reminders) {
+            System.out.println("Title: " + reminder.getTitle());
+            System.out.println("Description: " + reminder.getDescription());
+            System.out.println("Date and Time: " + reminder.getDateTime());
+            System.out.println();
+        }
+    }
+
 
     private void undoLastAction() {
         // lógica para deshacer la última acción utilizando la pila de deshacer
