@@ -58,5 +58,9 @@ public class Reminder {
     public String getDateTime() {
         return null;
     }
+
+    public String getReminderId() {
+        return null;
+    }
 }
 

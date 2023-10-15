@@ -25,5 +25,8 @@ public class UndoAction {
         return reminder;
     }
 
+    public Object getActionData() {
+        return null;
+    }
 }
 

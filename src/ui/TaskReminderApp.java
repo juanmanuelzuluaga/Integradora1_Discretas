@@ -89,7 +89,7 @@ public class TaskReminderApp {
         Task newTask = new Task(title, description, deadline, priority);
 
         String taskId = generateUniqueId();
-        taskStorage.addTask(taskId, newTask);
+        taskStorage.addTask(newTask);
 
         undoStack.push(new UndoAction("Add Task", newTask));
 
@@ -125,7 +125,7 @@ public class TaskReminderApp {
         Reminder newReminder = new Reminder(title, description, dateTime);
 
         String reminderId = generateUniqueId();
-        taskStorage.addReminder(reminderId, newReminder);
+        taskStorage.addReminder(newReminder);
 
         undoStack.push(new UndoAction(newReminder, "Add Reminder"));
 
@@ -264,8 +264,41 @@ public class TaskReminderApp {
 
 
     private void undoLastAction() {
-        // lógica para deshacer la última acción utilizando la pila de deshacer
+        if (undoStack.isEmpty()) {
+            System.out.println("Nothing to undo.");
+            return;
+        }
+
+        UndoAction lastAction = undoStack.pop();
+
+        String actionType = lastAction.getActionType();
+        if ("Add Task".equals(actionType)) {
+            Task task = (Task) lastAction.getActionData();
+            taskStorage.deleteTask(task.getTaskId());
+            System.out.println("Undone: Task added");
+        } else if ("Add Reminder".equals(actionType)) {
+            Reminder reminder = (Reminder) lastAction.getActionData();
+            taskStorage.deleteReminder(reminder.getReminderId());
+            System.out.println("Undone: Reminder added");
+        } else if ("Modify Task".equals(actionType)) {
+            Task modifiedTask = (Task) lastAction.getActionData();
+            taskStorage.modifyTask(modifiedTask.getTaskId(), modifiedTask);
+            System.out.println("Undone: Task modification");
+        } else if ("Modify Reminder".equals(actionType)) {
+            Reminder modifiedReminder = (Reminder) lastAction.getActionData();
+            taskStorage.modifyReminder(modifiedReminder.getReminderId(), modifiedReminder);
+            System.out.println("Undone: Reminder modification");
+        } else if ("Delete Task".equals(actionType)) {
+            Task deletedTask = (Task) lastAction.getActionData();
+            taskStorage.addTask(deletedTask);
+            System.out.println("Undone: Task deletion");
+        } else if ("Delete Reminder".equals(actionType)) {
+            Reminder deletedReminder = (Reminder) lastAction.getActionData();
+            taskStorage.addReminder(deletedReminder);
+            System.out.println("Undone: Reminder deletion");
+        }
     }
+
 
     public static void main(String[] args) {
         TaskReminderApp app = new TaskReminderApp();

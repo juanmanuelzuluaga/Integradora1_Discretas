@@ -9,7 +9,7 @@ public class TaskHashStorage {
         taskMap = new HashMap<>();
     }
 
-    public void addTask(String taskId, Task task) {
+    public void addTask(Task task) {
         taskMap.put(taskId, task);
     }
 
@@ -31,7 +31,7 @@ public class TaskHashStorage {
         return taskMap;
     }
 
-    public void addReminder(String reminderId, Reminder newReminder) {
+    public void addReminder(Reminder newReminder) {
     }
 
     public boolean containsTask(String taskIdOrReminderId) {

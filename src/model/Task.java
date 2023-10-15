@@ -55,4 +55,8 @@ public class Task {
                 ", prioritaria=" + priority +
                 '}';
     }
+
+    public String getTaskId() {
+        return null;
+    }
 }
